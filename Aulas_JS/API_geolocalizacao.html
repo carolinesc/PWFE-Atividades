@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #map{
+            height: 400px;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <p>latitude: <span id="latitude"></span></p>
+    <p>longitude: <span id="longitude"></span></p>
+    <div id="map"></div>
+    <button onclick="getLocation()">encontrar localizacao</button>
+    
+    <script>
+        let map;
+        function initMap(latitude, longitude){
+            if(!isNaN(parseFloat(latitude)) && !isNaN(parseFloat(longitude))){
+
+                map = new google.maps.Map(document.getElementById('map'),{
+                    center: {lat: parseFloat(latitude), lng: parseFloat(longitude)},
+                    zoom: 12
+                });
+                new google.maps.Marker({
+                    position: {lat: parseFloat(latitude),lng: parseFloat(longitude)},
+                    map: map,
+                    title: 'sua localizacao'
+                });
+            }else{
+                alert('coordenadas invalidas');
+
+            }
+        }
+        function getLocation(){
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert('Geolocalizaçao nao e suportada por este navegador');
+            }
+        }
+        function showPosition(position){
+            const latitudeElement = document.getElementById('latitude');
+            const longitudeElement = document.getElementById('longitude');
+
+            latitudeElement.innerText = position.coords.latitude;
+            longitudeElement.innerText = position.coords.longitude;
+
+            initMap(position.coords.latitude, position.coords.longitude);
+
+        }
+
+        function showError(error){
+            switch(error.code) {
+                case error.PERMISSION_DENTED: 
+                alert("Permissao para geolocalizaçao foi negada pelo usuario.");
+                break;
+                case error.PERMISSION_UNAVAILABLE: 
+                alert("informaçoes de localizacao indisponiveis.");
+                break;
+                case error.TIMEOUT: 
+                alert("tempo limite esgotado ao tentar obter a localizaçao.");
+                break;
+                case error.UNKNOWN_ERROR: 
+                alert("ocorreu um erro desconhecido ao tentar obter a localizacao.");
+                break;
+            }
+
+        }
+
+
+
+
+    </script>
+
+    <!--API do google maps-->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDROdqx-sb1-NoWGEe3seg-Cf5dgGI4oJs&callback=initMap"></script>
+
+</body>
+</html>

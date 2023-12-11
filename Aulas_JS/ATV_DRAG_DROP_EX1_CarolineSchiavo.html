@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #div1 {
+          width: 200px;
+          height: 200px;
+          padding: 10px;
+          border: 2px solid #000000;
+          position: absolute;
+        }
+        #div2 {
+          width: 200px;
+          height: 200px;
+          padding: 10px;
+          border: 2px solid #000000;
+          position: absolute;
+          margin-left: 225px;
+          margin-top: -18px;
+         
+        }
+        #div3 {
+          width: 200px;
+          height: 200px;
+          padding: 10px;
+          border: 2px solid #000000;
+          position: absolute;
+          margin-top: 190px;
+        }
+        #div4 {
+          width: 200px;
+          height:200px;
+          padding: 10px;
+          border: 2px solid #000000;
+          position: absolute;
+          margin-left: 225px;
+          margin-top: 172px;
+        }
+        .imgbaixo{
+            margin-top: -70px;
+            margin-left: 600px;
+        }
+    </style>
+    <script>
+        // função para permitir soltar os elementos no espaço
+        function allowDrop(ev) {
+          ev.preventDefault();
+        }
+         
+        // fuunção para exibir
+        function drag(ev) {
+          // Define os dados que serão transferidos durante o arrasto
+          ev.dataTransfer.setData("text", ev.target.id);
+        }
+         
+        // Função chamada ao soltar um elemento na área de destino
+        function drop(ev) {
+          // Evita o comportamento padrão de soltar elementos
+          ev.preventDefault();
+          
+          // Obtém os dados transferidos durante o arrasto
+          var data = ev.dataTransfer.getData("text");
+          
+          // Adiciona o elemento arrastado à área de destino
+          ev.target.appendChild(document.getElementById(data));
+        }
+    </script>
+</head>
+<body>
+    <p>Complete o quebra-cabeça:</p>
+ 
+    <!-- Área de destino para o elemento arrastado -->
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <br>
+    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <br>
+    <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <br>
+    <div id="div4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <br>
+    <!-- Elemento arrastável -->
+    <div class="imgbaixo">
+    <img id="drag1" src="IMG/Red Modern Express Delivery - Logo (3).png" draggable="true" ondragstart="drag(event)" width="200" height="200">
+    <img id="drag2" src="IMG/Red Modern Express Delivery - Logo (4).png" draggable="true" ondragstart="drag(event)" width="200" height="200">
+    <img id="drag3" src="IMG/Red Modern Express Delivery - Logo (5).png" draggable="true" ondragstart="drag(event)" width="200" height="200">
+    <img id="drag4" src="IMG/Red Modern Express Delivery - Logo (6).png" draggable="true" ondragstart="drag(event)" width="200" height="200">
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h2>Adicionar Produtos na Lista</h2>
+    <label for="nome-produto">Nome do Produto</label>
+    <input type="text" id="nome-produto" name="nome-produto"><br>
+    <label for="preco-produto">Preço Produto</label>
+     <input type="number" id="preco-produto" name="preco-produto"><br>
+    <button onclick="adicionaProduto()">ADD Produto</button>
+       
+    <!-- nossa lista de produtos-->
+    
+    <h2>Lista de Produtos</h2>
+    <ul id="lista-produtos">  <!--aqui serao criados os itens da lista-->
+    </ul>
+        
+    <!--editar campos-->
+    
+    <h2>Editar dados da Lista</h2>
+    <label for="editar-nome-produto">Nome Produto</label>
+    <input type="text" id="editar-nome-produto" name="editar-nomeproduto"><br>
+    <label for="editar-preco-produto">Preço Produto</label>
+    <input type="number" id="editar-preco-produto" name="editar-precoproduto"><br>
+    <button onclick="atualizarProduto()">Atualizar Produtos</button>
+        
+    <!--excluir Produtos-->
+    
+    <h2>Excluir dados da Lista</h2>
+   
+    <select id="excluir-produto"></select>
+    <button onclick="excluirProduto()">Excluir produtos--</button>
+
+    <script>
+        function obterListaProduto(){
+            return JSON.parse(localStorage.getItem('produtos')) || []; //json recebe todos os dados do usuario e qr armazenar em um site, ent ele converte oq ta no formulario
+            //e fazer uma tranformaçao para string
+
+        }
+        function salvarListaProdutos(lista){
+            localStorage.setItem('produtos',JSON.stringify(lista)); //salva a lista convertida em string
+
+        }
+        let listaProdutos = obterListaProduto();
+
+        function adicionaProduto(){
+            const nome = document.getElementById('nome-produto').value;
+            const preco = parseFloat(document.getElementById('preco-produto').value);
+
+            if(nome && preco){
+                listaProdutos.push({nome, preco});
+                salvarListaProdutos(listaProdutos);
+                atualizarListaProduto();
+                limparCampos();
+
+            }
+        }
+       //funcao atualizar
+        
+       function atualizarListaProduto(){
+            const lista = document.getElementById("lista-produtos");
+                lista.innerHTML = '';
+                listaProdutos.forEach((produto,index) =>{
+            const li = document.createElement('li');
+            li.textContent = `${produto.nome} - R$
+                ${produto.preco.toFixed(2)}`;
+        
+        
+        //add botao p/ edicao de valores
+            const botaoEditar = document.createElement('button');
+                botaoEditar.textContent = 'Editar Dados';
+                botaoEditar.onclick = () =>
+                preencherFormularioEditar(index);
+                    li.appendChild(botaoEditar);
+                    lista.appendChild(li);
+             });
+                atualizarListaExclusao();
+        }
+
+        //formulario editar
+
+        function preencherFormularioEditar(index){
+             const produto = listaProdutos[index];
+             document.getElementById("editar-nome-produto").value = produto.nome;
+            document.getElementById("editar-preco-produto").value = produto.preco;
+
+        }
+        
+        //funcao atualizar
+
+        function atualizarListaExclusao(){
+             
+            const selectExcluir = document.getElementById("excluir-produto");
+             selectExcluir.innerHTML = '';
+                listaProdutos.forEach((produto,index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = produto.nome;
+                    selectExcluir.appendChild(option);
+
+                });
+        }
+
+        //atualizar Produto
+        
+        function atualizarProduto(){
+            
+            const index = document.getElementById("excluir-produto").value;
+            const nome = document.getElementById("editar-nome-produto").value;
+            const preco = parseFloat(document.getElementById("editar-preco-produto").value);
+
+            if(index !== '' && nome && preco){
+                 listaProdutos[index] = {nome, preco};
+                    atualizarListaProduto();
+                    limparFormularioEditar();
+        }
+    }
+        
+        //limpar campos
+        function limparCampos(){
+
+            document.getElementById("nome-produto").value = "";
+            document.getElementById("preco-produto").value = "";
+    }
+
+    //limpa form
+        function limparFormularioEditar(){
+            
+            document.getElementById("editar-nome-produto").value = "";
+            document.getElementById("editar-preco-produto").value = "";
+    }
+
+    //funcao excluir
+        function excluirProduto(){
+            
+            const index = document.getElementById("excluir-produto").value;
+            if(index !== ''){
+                listaProdutos.splice(index,1);
+                salvarListaProdutos(listaProdutos)
+                atualizarListaProduto();
+        }
+    }
+
+    //atualiza o browser p/ o usuario
+        window.onload = function(){
+            
+            atualizarProduto();
+};
+
+</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+npm init -y // criar o package.json
+npm install --save-dev webpack webpack-cli
+npx webpack // cria o build do webpack

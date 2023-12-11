@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="meuCanvas" width="400" height="400"></canvas>
+    <script>
+        var canvas = document.getElementById("meuCanvas");
+        //obtem a forma 2D para seu desenho
+        var ret = canvas.getContext("2d");
+        //define cor de preenchimento do retangulo
+        //ret.fillStyle = "black";
+        //desenhar o retangulo
+        //ret.fillRect(10, 10, 40, 100);
+        //define a new Path
+        ret.beginPath();
+        //define a start point
+        ret.moveTo(10,10);
+        //define points
+        ret.lineTo(100,70);
+        ret.lineTo(175,100);
+        ret.lineTo(20,100);
+        ret.lineTo(20,20);
+        //draw it
+        ret.stroke();
+
+
+    </script>
+</body>
+</html>

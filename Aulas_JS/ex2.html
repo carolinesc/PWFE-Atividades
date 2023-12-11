@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body onload="loadFunction()">
+    Nome: <input type="text" id="myInput"
+    onblur="blurFunction()">
+    <p>Modificar o texto</p>
+    Entre com o texto: <input type="text"
+    name="txt" value="OI"
+    onchange="myFunction(this.value)">
+    <p id="myP" onmousedown="mouseDown()"
+    onmouseup="mouseUp()"> Ao pressionar o mouse sobre o texto, o valor da propriedade
+                da cor vai ser alterada. </p>
+
+                <div onmouseover="coordenadasFigura(event)" onmouseout="clearCoor()">
+                <img class="tamanho" src="IMG/img1.jfif">
+            </div>
+            <p id="demo3"></p>
+            
+    
+            
+    <script src="JS/script2.js"></script>
+</body>
+</html>
